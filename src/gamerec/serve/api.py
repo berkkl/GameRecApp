@@ -2,6 +2,7 @@
 
 import json
 import logging
+import sqlite3
 import time
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
@@ -33,6 +34,7 @@ from ..utils.metadata import game_tags, steam_header_image
 from . import search_history as sqlite_history
 from . import search_history_supabase as supabase_history
 from .openrouter import get_ai_feedback, translate_to_english
+from .quota import DAILY_SEARCH_LIMIT, DailyQuotaExceeded, reserve_search
 
 logger = logging.getLogger(__name__)
 components = {}
@@ -294,6 +296,20 @@ async def recommend(request: RecommendationRequest):
     if not text and not request.seed_app_ids:
         raise HTTPException(400, "Provide a prompt or select one or more games.")
     dataset = _dataset(request.dataset)
+    try:
+        await run_in_threadpool(
+            reserve_search, settings.DATA_DIR / "search_quota.sqlite3"
+        )
+    except DailyQuotaExceeded as exc:
+        raise HTTPException(
+            429,
+            f"The shared daily limit of {DAILY_SEARCH_LIMIT} searches has been reached. "
+            "Please try again after 00:00 UTC.",
+            headers={"Retry-After": str(exc.retry_after)},
+        ) from exc
+    except (OSError, sqlite3.Error) as exc:
+        logger.error("Search quota storage is unavailable: %s", type(exc).__name__)
+        raise HTTPException(503, "Search is temporarily unavailable.") from exc
     search_text = text
     if settings.ENABLE_TRANSLATION and text:
         translation = await translate_to_english(text)

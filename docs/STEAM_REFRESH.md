@@ -2,6 +2,8 @@
 
 A complete, dated first-party inventory must be reconciled with catalog IDs before reporting coverage. The repository includes collection code, not a Steam catalog.
 
+Before collection or publication, verify the applicable source terms and data rights. A Web API key and conservative request budget do not grant permission for every store HTML/API endpoint or for redistribution of a legacy dataset. Record collection provenance and permissions with each independently maintained catalog.
+
 ## Collection sources and preserved fields
 
 The existing DuckDB `games` columns and their types are retained. Updates are keyed by `app_id`; IDs are never dropped. Fields not supplied by a source retain their previous value. On a new game they remain NULL. New records receive `created_at`; updates preserve the original creation date. Steam collection timestamps and the staged payload are retained in `steam_records`.

@@ -323,3 +323,28 @@ def test_rag_api_returns_the_winning_passage(client):
     assert data["results"][0]["evidence"] == "The winning review passage."
     assert data["results"][0]["evidence_kind"] == "review"
     assert data["results"][0]["evidence_source"].endswith("/1/")
+
+
+def test_search_budget_blocks_inference_and_fails_closed(client, monkeypatch):
+    import sqlite3
+
+    from src.gamerec.serve.quota import DailyQuotaExceeded
+
+    retrieve = MagicMock()
+    monkeypatch.setattr(api, "retrieve", retrieve)
+
+    def exhausted(_):
+        raise DailyQuotaExceeded(123)
+
+    monkeypatch.setattr(api, "reserve_search", exhausted)
+    response = recommend(client)
+    assert response.status_code == 429
+    assert response.headers["Retry-After"] == "123"
+    retrieve.assert_not_called()
+
+    def unavailable(_):
+        raise sqlite3.OperationalError("fixture failure")
+
+    monkeypatch.setattr(api, "reserve_search", unavailable)
+    assert recommend(client).status_code == 503
+    retrieve.assert_not_called()

@@ -51,7 +51,7 @@ PRIVATE_SUFFIXES = {
     ".tar",
 }
 # This public, upstream sentiment lexicon is an application dependency.
-ALLOWED_BINARY = {"nltk_data/sentiment/vader_lexicon.zip"}
+ALLOWED_BINARY = {"nltk_data/sentiment/vader_lexicon.zip", "docs/images/discovery.jpg"}
 PRIVATE_TEXT = re.compile(
     r"/"
     r"Users/[^/\s]+/|"
@@ -100,6 +100,11 @@ def main():
         except UnicodeDecodeError:
             failures.append(f"{name}: unreviewed binary")
             continue
+        if path.suffix.lower() == ".md" and re.search(
+            r"[\u00c7\u00e7\u011e\u011f\u0130\u0131\u00d6\u00f6\u015e\u015f\u00dc\u00fc]",
+            value,
+        ):
+            failures.append(f"{name}: documentation must use English spelling")
         if PRIVATE_TEXT.search(value):
             failures.append(f"{name}: personal filesystem path")
     if failures:

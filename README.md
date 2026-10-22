@@ -1,5 +1,12 @@
 # GameRecApp
 
+[Try the live demo](https://berkkalelioglu.com/find-games/). The hosted demo shares a budget of **100 recommendation searches per UTC day across all visitors**. It resets at 00:00 UTC; title autocomplete does not consume this budget.
+
+![GameRecApp discovery interface with a sample co-op search](docs/images/discovery.jpg)
+
+A personal hobby project developed with **Claude Code and Codex**, with no expectation of revenue. It is independent and is not affiliated with Valve, Steam or game publishers.
+
+
 Find Steam games from a description, games you like, or both. A FastAPI backend combines multilingual embeddings, BM25, structured filters and review-quality signals. The browser shows matching evidence, artwork and Steam links.
 
 This repository contains the application, collection and indexing tools, tests and deployment examples. Catalog databases, embeddings, search histories, credentials and internal development reports are not distributed. A clean checkout needs either the fictional demo below or a catalog and matching index you build yourself.
@@ -71,3 +78,17 @@ The VPS example binds the API to loopback port 4320, mounts a read-only catalog 
 Search history, logs, cloud history, translation and external AI feedback are off by default. Optional integrations require explicit configuration. Never commit real prompts, feedback, catalog exports, keys or local environment files. The MIT license covers this code; third-party game content and models retain their own terms.
 
 Before pushing, run `python scripts/check_public_files.py` and a redacted Gitleaks scan. The file guard rejects private file categories even when they are force-added. CI checks every branch and pull request. Local pre-commit hooks can be installed with `pip install pre-commit && pre-commit install`; do not bypass a failing privacy check.
+
+## Runtime cost and search budget
+
+The hosted demo uses `intfloat/multilingual-e5-small` locally on its server for embeddings. It does not call a generative LLM or a paid model API per search. Translation, AI feedback and cloud search history are disabled there. Optional provider integrations in the source require your own credentials if you enable them.
+
+The API reserves each valid recommendation attempt in `DATA_DIR/search_quota.sqlite3` before inference or optional provider work. A SQLite write transaction enforces the shared daily ceiling across processes; the file must persist across restarts. Failures after reservation still count. Quota storage failures return 503, and exhausted quotas return 429 with a reset hint. Keep every worker on the same local persistent file; multiple independent servers would need a shared transactional counter. The counter stores only the UTC day and total, not queries or user identities.
+
+## Data and licensing
+
+The MIT license covers this project's code. It does not grant rights to game artwork, descriptions, reviews, third-party datasets or model weights. The public repository does not distribute the hosted Steam catalog or embeddings. The current hosted catalog was recovered from an earlier project export; its complete collection history and redistribution permissions have not been independently verified. Do not treat it as a generally licensed downloadable dataset.
+
+Steam content belongs to Valve and the relevant rightsholders. Review the [Steam Web API terms](https://steamcommunity.com/dev/apiterms) for API use; these do not establish permission for every unofficial store endpoint or previously collected dataset. Catalog information and recommendations are provided as-is. The [E5 model card](https://huggingface.co/intfloat/multilingual-e5-small) declares an MIT license for that model. Other models and dependencies retain their own licenses.
+
+The screenshot illustrates the application; third-party game artwork remains the property of its rightsholders. A hobby or noncommercial purpose does not waive third-party license obligations.

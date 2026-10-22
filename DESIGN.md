@@ -2,7 +2,7 @@
 version: 1
 name: GameRecApp
 lang: en
-description: Steam oyun keşfi için nötr yüzeyler, petrol mavisi vurgu ve okunabilir oyun kartları.
+description: Neutral surfaces, a petrol-blue accent and readable cards for Steam game discovery.
 colors:
   background: "#fafafa"
   surface: "#ffffff"
@@ -41,58 +41,58 @@ rounded:
   panel: "12px"
 ---
 
-# GameRecApp tasarım sistemi
+# GameRecApp design system
 
-Kullanıcı bir oyun isteği yazar, sevdiği oyunları ekler ve Steam oyunlarını inceler. Arama ve sonuçlar aynı sayfada kalır.
+People describe a game they want, add games they enjoy, and explore Steam recommendations. Search and results stay on the same page.
 
-## Stil sahipleri
+## Stylesheet ownership
 
-- `public/design.css`: renkler, 4px boşluk ölçeği, yazı ailesi, köşeler, ortak girdi ve klavye odağı kuralları. Keşif, geçmiş ve benchmark sayfaları aynı dosyayı kullanır.
-- `public/discover.css`: keşif kabuğu, arama formu, başlangıç seçenekleri ve sonuç kartları.
-- `public/sequel.css`: ilişkili oyunların açılır listesi.
-- `public/index.html`: keşif sayfasının yapısı. `public/app.js` sonuç kartlarını üretir.
-- `public/history.html`, `public/benchmark.html`: sayfaya özgü yerleşim kuralları ortak renk değişkenlerini kullanır. Geçmiş sayfası yalnızca mevcut sunucu ayarı izin veriyorsa kullanılabilir.
+- `public/design.css`: shared colors, 4px spacing scale, typography, corners, inputs and keyboard focus. Discovery, history and generated benchmark pages use these tokens.
+- `public/discover.css`: discovery layout, search form, starting points and result cards.
+- `public/sequel.css`: related-game disclosures.
+- `public/index.html`: discovery markup. `public/app.js` renders result cards.
+- `public/history.html`: page layout using the shared colors. History is available only when enabled on the server. Generated benchmark pages follow the same convention.
 
-Yeni stiller ortak renkleri tekrar tanımlamaz.
+New styles reuse the shared tokens instead of redefining them.
 
-## Renk ve yüzey
+## Colors and surfaces
 
-Sayfa `#FAFAFA`, kartlar beyaz, yardımcı alanlar `#F2F4F5` olur. `#185C68` ana eylem, marka, bağlantı ve klavye odağında kullanılır. Seçili seçenekler `#EAF3F5` zemin taşır. Ana renk geniş dekoratif alanları kaplamaz.
+Use `#FAFAFA` for the page, white for cards and `#F2F4F5` for supporting areas. Use `#185C68` for primary actions, branding, links and keyboard focus. Selected options use `#EAF3F5`. Avoid large decorative areas filled with the accent color.
 
-Metin `#24272B`, yardımcı metin `#616970` olur. Kart sınırı `#E3E6E8`, girdi ve ikincil düğme sınırı `#879399` olur. Başarılı işlem yeşil, uyarı kahverengi, hata kırmızı metinle ve açık zeminle gösterilir. Durumu yalnızca renk anlatmaz; “Saved”, hata açıklaması ve benchmark değerlendirme etiketi görünür kalır.
+Primary text is `#24272B`; supporting text is `#616970`. Card borders use `#E3E6E8`; inputs and secondary buttons use `#879399`. Success, warning and error states use green, brown and red text on pale backgrounds. Always include text such as "Saved", an error explanation or a benchmark evaluation label; color alone must not convey state.
 
-Oyun kapakları özgün renklerini korur. Başlangıç kartlarının başlıkları görselin altındaki beyaz yüzeyde görünür; görsel üzerinde uzun metin veya koyu geçiş katmanı kullanılmaz. Eksik görsel yerine oyun adı gösterilir.
+Game artwork keeps its original colors. Starting-point titles appear on white beneath the image, without lengthy overlays or dark gradients. If artwork is unavailable, show the game name.
 
-## Yazı ve dil
+## Typography and language
 
-Sistem yazı ailesi `system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif` olur. Dış font isteği yapılmaz. Gövde 16px/1.65, arayüz 14px/1.5, yardımcı bilgi 13px olur. Başlıklar 600 ağırlık taşır; ana başlık 28–40px, bölüm başlığı 24px ve oyun adı 20px olur.
+Use `system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif` without external font requests. Body text is 16px/1.65, interface text 14px/1.5 and metadata 13px. Headings use weight 600: page titles 28-40px, section titles 24px and game titles 20px.
 
-Arayüzün mevcut dili İngilizcedir; sorgu alanı Türkçe dahil farklı dillerde istek kabul eder. Bu uyarlama yeni bir çeviri sistemi eklemez. Etiketler kullanıcının işlemini anlatır: “Games you love”, “More filters”, “View on Steam”, “Add to taste”. Yeni motivasyon sloganları eklenmez. Uzun oyun adları, sorgular ve düğme etiketleri satıra geçer.
+The interface and repository documentation are English. Queries can be multilingual; this does not imply a translated interface. Use action labels such as "Games you love", "More filters", "View on Steam" and "Add to taste". Avoid motivational slogans. Long game names, queries and button labels wrap.
 
-## Yerleşim
+## Layout
 
-Keşif kabuğu en fazla 1440px genişliğindedir, masaüstü kenar boşluğu 40px olur. Sol alan bir gezinme menüsü değil, oyun isteği ve tercihler için 352px arama formudur. Form ile içerik arasında 32px bulunur. 900px ve altında kenar boşluğu 24px, form genişliği 320px olur.
+The discovery shell is at most 1440px wide with 40px desktop margins. The left column is a 352px search and preferences form, separated from results by 32px. At widths of 900px or less, use 24px margins and a 320px form.
 
-760px ve altında form ve sonuçlar tek sütuna geçer; sayfa kenarı 16px olur. Orta genişliklerde form alanları iki sütun kullanabilir, 600px ve altında yeniden tek sütun olur. Kontroller sayfanın normal akışında kalır; formun bağımsız kaydırma alanı veya sabit yüksekliği yoktur. Masaüstü üst çubuğu sabit kalır, dar ekranda içerik akışına geçer.
+At 760px or less, stack the form above results with 16px page margins. Form fields may use two columns at intermediate widths, returning to one below 600px. Controls remain in normal page flow, without an independently scrolling or fixed-height form. The desktop top bar is sticky; on narrow screens it returns to normal flow.
 
-Sonuçlar yeterli genişlikte iki sütundur; 1100px altında dar içerik alanında tek sütun olur. Form üstte olduğunda 600–760px aralığında iki sonuç sütunu yeniden kullanılabilir. Oyun kartı iç boşluğu masaüstünde 24px, mobilde 20px olur.
+Results use two columns when space permits, becoming one below 1100px while the form remains beside them. Once the form is above the results, two result columns may fit between 600px and 760px. Card padding is 24px on desktop and 20px on mobile.
 
-Bir grubun içindeki boşluk 8–12px, gruplar arasında 24px, ana bölümler arasında 32px olur. Metin ve girdi arasında 8px kalır. Hizalamalar ve boşluklar CSS logical properties ile yazılır. Geniş benchmark/geçmiş tabloları kendi alanında kayar; sayfa yatay taşmaz.
+Use 8-12px within groups, 24px between groups and 32px between major sections. Leave 8px between a label and input. Prefer CSS logical properties. Wide history and benchmark tables scroll inside their own containers without overflowing the page.
 
-## Kontroller ve kartlar
+## Controls and cards
 
-Bir görev grubunda tek ana eylem bulunur: “Find my next game”. Ana düğme petrol mavisi üzerinde beyaz metin kullanır. İkincil düğmeler beyaz zemin ve belirgin kontrol kenarı taşır. Düğmeler ve girdiler en az 44px yüksekliğindedir. Girdi yazısı en az 16px ve köşesi 8px olur; görünür etiket yer tutucu metnin yerini almaz.
+Each task group has one primary action: "Find my next game". Primary buttons use white text on the accent color. Secondary buttons use white backgrounds and visible borders. Buttons and inputs are at least 44px high. Input text is at least 16px, with 8px corners and persistent visible labels.
 
-Kartlar beyaz zemin, 1px yüzey sınırı ve 12px köşe taşır. Normal kartlarda gölge ve hover hareketi bulunmaz. Hover renk veya kenar değişikliğiyle belirtilir. Oyun ekleme, çıkarma ve geri bildirim kontrolleri satıra geçebilir.
+Cards use a white background, 1px surface border and 12px corners. Ordinary cards have no shadow or hover motion. Indicate hover through color or border changes. Add, remove and feedback controls may wrap.
 
-Filtreler, eşleşen metin, ilgili oyunlar ve geri bildirim native `details`/`summary` ile açılır. Açılma işareti görünür kalır. Her etkileşimli öğe klavye odağında 2px petrol mavisi çerçeve gösterir. Seçim radyolarının görünür etiketi odak çerçevesini taşır. Azaltılmış hareket tercihinde animasyon ve geçişler kapanır.
+Filters, matching text, related games and feedback use native `details`/`summary` disclosures with visible indicators. Interactive elements receive a 2px accent outline on keyboard focus. Radio-option labels carry the focus outline. Disable animation and transitions when reduced motion is requested.
 
-## Durumlar ve veri
+## States and data
 
-Arama sürerken yükleme metni ve nötr kart iskeletleri görünür. Boş sonuç, sorguyu değiştirme veya filtreleri temizleme eylemini sunar. Hata metni sorunu ve mümkün olan sonraki işlemi açıklar. Başarılı oyun seçimi kısa bir durum mesajı gösterir.
+While searching, show loading text and neutral skeleton cards. Empty results offer a way to change the query or clear filters. Errors explain the problem and an available next action. Successful game selection shows a brief status message.
 
-Katalog kapsamı ve veri güncelliği açıklaması korunur. Gerçek Steam bağlantısı, oyun görseli, inceleme oranı, oyun modu ve eşleşen kaynak metni kartta kalır. Demo verilerinde mevcut demo etiketi korunur; gerçek veriymiş gibi gösterilmez. Tasarım kuralları veri doğruluğu veya öneri kalitesi garantisi değildir.
+Preserve catalog coverage and freshness notices. Keep Steam links, artwork, review ratios, play modes and matching source text in result cards. Clearly label synthetic demo data. Design consistency does not guarantee data accuracy or recommendation quality.
 
-## Doğrulama
+## Verification
 
-Yeni görünümler 320, 390, 760, 900, 1280 ve 1440px genişliklerinde kontrol edilir. 200% yakınlaştırma, uzun Türkçe sorgu ve oyun adları, klavye odağı, filtre disclosure, oyun seçimi, sonuç, yükleme ve hata durumları kontrol edilir. RTL yalnızca bir yerleşim dayanıklılık kontrolüdür; yeni dil desteği iddiası değildir. Yapılmayan kontroller raporda açıkça belirtilir.
+Check new layouts at widths of 320, 390, 760, 900, 1280 and 1440px. Include 200% zoom, long multilingual queries and titles, keyboard focus, filter disclosures, game selection, results, loading and errors. RTL is a layout robustness check, not a claim of additional language support. Report checks that were not performed.

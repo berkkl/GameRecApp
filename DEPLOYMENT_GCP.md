@@ -32,6 +32,10 @@ docker run --rm -p 8000:8000 -v "$(pwd)/data:/app/data" -e DB_PATH=/app/data/cat
 
 The image caches the build-time encoder and runs offline. It does not ingest or create sample data. Check `/health`, `/datasets`, and a real `/recommend` request before deployment. Health JSON must report `components_loaded: true`; a running process alone is insufficient.
 
+## Daily search quota and persistent state
+
+The recommendation API permits 100 attempts per UTC day across processes sharing `DATA_DIR/search_quota.sqlite3`. Mount a persistent writable local volume for this counter, separate from read-only catalog artifacts. The hosted VPS demo uses one shared volume. Ephemeral Cloud Run filesystems or independent replicas cannot enforce one durable global budget: use a shared transactional service before exposing such a deployment, or keep this app on one server with persistent state. Do not assume the Cloud Run example below provides the hosted demo's global quota guarantee.
+
 ## Cloud Build and Firebase
 
 `cloudbuild.yaml` builds/pushes to Artifact Registry and deploys Cloud Run. Its defaults use the legacy MiniLM index. To deploy RAG, pass non-secret substitutions:
