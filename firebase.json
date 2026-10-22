@@ -1,0 +1,61 @@
+{
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/recommend",
+        "run": {
+          "serviceId": "gamerecapp",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/feedback",
+        "run": {
+          "serviceId": "gamerecapp",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/datasets",
+        "run": {
+          "serviceId": "gamerecapp",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/games",
+        "run": {
+          "serviceId": "gamerecapp",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/health",
+        "run": {
+          "serviceId": "gamerecapp",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/search-history",
+        "run": {
+          "serviceId": "gamerecapp",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/search-history/**",
+        "run": {
+          "serviceId": "gamerecapp",
+          "region": "europe-west1"
+        }
+      }
+    ]
+  }
+}

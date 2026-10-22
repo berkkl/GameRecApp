@@ -1,0 +1,15 @@
+[Unit]
+Description=Discover, collect and publish GameRecApp Steam updates
+After=docker.service network-online.target
+Wants=network-online.target
+Requires=docker.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/gamerecapp
+ExecStart=/usr/bin/python3 /opt/gamerecapp/refresh-host.py
+ExecStopPost=-/usr/bin/docker rm --force gamerec-steam-refresh-worker
+TimeoutStartSec=36h
+Nice=10
+StandardOutput=journal
+StandardError=journal

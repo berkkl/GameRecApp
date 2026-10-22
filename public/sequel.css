@@ -1,0 +1,12 @@
+/* Related games use native details disclosure and shared surface tokens. */
+.sequel-badge { color: var(--primary); font-size: 14px; cursor: pointer; }
+.sequel-list { display: none; margin-block-start: 12px; padding: 12px; background: var(--surface-muted); border-radius: var(--radius-control); border: 1px solid var(--border); }
+.series[open] .sequel-list, .sequel-list.expanded { display: block; }
+.sequel-item { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding-block: 8px; border-bottom: 1px solid var(--border); }
+.sequel-item:last-child { border-bottom: none; }
+.sequel-item a { color: var(--text); font-size: 14px; flex: 1; min-width: 0; min-height: 44px; display: inline-flex; align-items: center; overflow-wrap: anywhere; }
+.sequel-item a:hover { color: var(--primary); }
+.sequel-item-ratings, .game-ratings { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.sequel-rating { font-size: 13px; color: var(--text-muted); padding: 4px 8px; background: var(--surface); border-radius: 4px; }
+.steam-rating { display: inline-flex; align-items: center; gap: 4px; padding: 4px 8px; background: var(--success-soft); border: 1px solid var(--border); border-radius: 4px; font-size: 13px; color: var(--success); }
+.match-score { display: inline-flex; padding: 4px 8px; background: var(--primary-soft); border-radius: 4px; font-size: 13px; color: var(--primary); }

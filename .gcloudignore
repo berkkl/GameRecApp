@@ -1,0 +1,145 @@
+# This file specifies files that are *not* uploaded to Google Cloud
+# using gcloud. It follows the same syntax as .gitignore
+
+.gcloudignore
+.git
+.gitignore
+.github/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+env/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+*.cover
+.hypothesis/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Development files
+*.md
+!README.md
+LICENSE
+.env
+.env.*
+
+# Raw data (we keep processed data)
+data/raw/
+data/sample/
+
+# Logs (will be regenerated)
+*.log
+data/search_logs.jsonl
+data/search_history.db
+data/search_history.db-*
+data/feedback.db
+data/feedback.db-*
+data/evaluation/
+data/recovered/
+data/ui-preview/
+data/steam-refresh.sqlite*
+data/audit-*
+data/grok-*
+data/*tests.txt
+data/experiments/
+grok-audit-raw.md
+.grok-audit-prompt.txt
+.grok-review-prompt.txt
+.firecrawl/
+
+# Test files
+tests/
+pytest.ini
+
+# Documentation
+docs/
+*.txt
+!requirements.txt
+!requirements-lock.txt
+
+# Development tools
+Makefile
+scripts/create_sample_dataset.py
+scripts/eval/
+
+# Docker (build happens in Cloud Build)
+Dockerfile.dev
+docker-compose.yml
+
+# Local credentials and deployment selections
+.firebaserc
+*.env
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+credentials*.json
+service-account*.json
+secrets/
+
+# Agent workspace instructions, handoffs, and generated review reports
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+SKILL.md
+.agent/
+.agents/
+.codex/
+.claude/
+.cursor/
+.gemini/
+handoffs/
+**/handoffs/
+docs/GROK_*.md
+docs/*AUDIT*.md
+docs/*REVIEW*.md
+docs/*STATUS*.md
+docs/*PILOT*.md
+docs/*APPLIED*.md
+public/benchmark.html
+
+# Generated datasets, models, exports, histories and private diagnostics
+*.db
+*.db-*
+*.duckdb
+*.duckdb.*
+*.sqlite*
+*.npy
+*.npz
+*.index
+*.ids
+*.pkl
+*.pickle
+*.pt
+*.pth
+*.log
+*.jsonl
+*.har
+*.zip
+*.tar
+*.gz
+!.env.example
+
+# Public upstream NLTK sentiment resource
+!nltk_data/sentiment/vader_lexicon.zip

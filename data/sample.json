@@ -1,0 +1,11 @@
+[
+    {
+        "id": "1",
+        "title": "Sample Game",
+        "description": "This is a sample game.",
+        "tags": [
+            "Action",
+            "Indie"
+        ]
+    }
+]

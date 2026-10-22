@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameRecApp — Find your next game</title>
+    <meta name="description" content="Find Steam games around your taste. Describe a mood, choose games you love, and discover what to play next.">
+    <link rel="stylesheet" href="design.css?v=20261002-design1">
+    <link rel="stylesheet" href="sequel.css?v=20261002-design1">
+    <link rel="stylesheet" href="discover.css?v=20261002-design1">
+</head>
+<body>
+    <a class="skip-link" href="#discovery-form">Skip to search</a>
+    <div class="page-shell">
+        <header class="site-header">
+            <a class="brand" href="./" aria-label="GameRecApp home"><span class="brand-mark" aria-hidden="true">g<span>r</span></span><span>GameRec<span class="brand-light">App</span></span></a>
+            <nav aria-label="Main navigation"><span class="nav-current">Discover</span><a id="history-link" hidden href="history.html">Search history</a></nav>
+            <span class="header-note"><span class="status-dot" aria-hidden="true"></span>Steam game discovery</span>
+        </header>
+        <aside id="demo-notice" class="demo-notice" role="status" hidden><strong>Demo with fictional games.</strong> Try the search, filters and taste controls. These sample games and ratings are illustrative; the real Steam catalog is not loaded yet.</aside>
+
+        <section class="page-intro">
+            <p class="eyebrow">Game discovery</p>
+            <h1>Find your next <span>game.</span></h1>
+            <p>Start with a mood, a favorite, or a little of both.</p>
+        </section>
+
+        <main class="discovery-layout">
+            <aside class="search-panel" aria-label="Build your search">
+                <form id="discovery-form">
+                    <div class="panel-title"><h2>Your kind of game</h2><button type="button" id="reset-search" class="text-button">Reset</button></div>
+                    <div class="field-block">
+                        <label for="query">What are you in the mood for?</label>
+                        <textarea id="query" maxlength="4000" rows="4" aria-describedby="prompt-hint" placeholder="A cozy farming game with lots to explore, but no combat…"></textarea>
+                        <p id="prompt-hint" class="field-hint">Describe it in your own words, in any language.</p>
+                    </div>
+
+                    <div class="field-block taste-block">
+                        <div class="field-label-row"><label for="game-lookup">Games you love</label><span id="selection-count" class="field-hint">Optional</span></div>
+                        <div class="lookup-wrapper">
+                            <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+                            <input id="game-lookup" type="search" placeholder="Search a game title" maxlength="100" autocomplete="off" aria-describedby="lookup-hint" aria-controls="game-options">
+                        </div>
+                        <p id="lookup-hint" class="sr-only">Type at least two characters, then select a result. Choose up to ten games.</p>
+                        <div id="game-options" class="lookup-options" aria-live="polite" hidden></div>
+                        <div id="selected-games" class="selection-list" aria-live="polite"></div>
+                        <div id="seed-mode-field" class="seed-mode-field" hidden>
+                            <label for="seed-mode">How should we combine them?</label>
+                            <select id="seed-mode"><option value="blend">Blend my tastes</option><option value="any">Like any favorite</option><option value="all">Find their common ground</option></select>
+                        </div>
+                        <div id="disliked-section" class="disliked-section" hidden><span class="field-label">Less of this</span><div id="disliked-games" class="selection-list" aria-live="polite"></div></div>
+                    </div>
+
+                    <fieldset class="discovery-preference">
+                        <legend>What would you like to discover?</legend>
+                        <div class="preference-options">
+                            <label><input type="radio" name="preference" value="balanced" checked><span>For you</span></label>
+                            <label><input type="radio" name="preference" value="popular"><span>Popular</span></label>
+                            <label><input type="radio" name="preference" value="hidden_gems"><span>Hidden gems</span></label>
+                        </div>
+                    </fieldset>
+
+                    <details class="filter-details">
+                        <summary><span>More filters</span><span id="filter-count" class="filter-count" hidden></span><svg aria-hidden="true" viewBox="0 0 20 20"><path d="m5 7 5 5 5-5"/></svg></summary>
+                        <div class="filter-fields">
+                            <label for="co-op">Play together<select id="co-op"><option value="">Solo or co-op</option><option value="yes">Co-op required</option><option value="no">Exclude co-op</option></select></label>
+                            <span class="field-label">Release year</span>
+                            <div class="year-fields"><label for="min_year">From<input id="min_year" type="number" min="1970" max="2100" placeholder="Any"></label><span aria-hidden="true">—</span><label for="max_year">To<input id="max_year" type="number" min="1970" max="2100" placeholder="Any"></label></div>
+                        </div>
+                    </details>
+
+                    <button id="search-button" class="primary-button" type="submit"><span id="search-button-label">Find my next game</span><span aria-hidden="true">↗</span></button>
+                    <p class="privacy-note">Your taste selections stay in this tab.</p>
+                </form>
+            </aside>
+
+            <section class="discovery-content" aria-label="Game discovery">
+                <div id="error" class="error-message" role="alert" hidden></div>
+                <div id="loading" class="loading-state" role="status" hidden>
+                    <div class="loading-heading"><span class="loading-spinner" aria-hidden="true"></span><div><h2>Finding your next favorite</h2><p>Matching games to your taste…</p></div></div>
+                    <div class="skeleton-grid" aria-hidden="true"><div class="skeleton-card"></div><div class="skeleton-card"></div><div class="skeleton-card"></div><div class="skeleton-card"></div></div>
+                </div>
+
+                <div id="welcome">
+                    <div class="section-heading"><div><p class="eyebrow">Explore by mood</p><h2>Choose a starting point</h2></div><span class="subtle">Pick a mood to start</span></div>
+                    <div class="inspiration-grid">
+                        <button type="button" class="inspiration-card calm" data-prompt="relaxing farming simulation with exploration and no combat">
+                            <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/413150/header.jpg" alt="" loading="lazy">
+                            <span class="inspiration-shade"></span><span class="inspiration-text"><span class="mood-label">Relax</span><strong>Relaxing games</strong><span>Farming and exploration.</span></span><span class="inspiration-arrow" aria-hidden="true">↗</span>
+                        </button>
+                        <button type="button" class="inspiration-card challenge" data-prompt="challenging exploration platformer with atmospheric worlds and satisfying combat">
+                            <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/367520/header.jpg" alt="" loading="lazy">
+                            <span class="inspiration-shade"></span><span class="inspiration-text"><span class="mood-label">Challenge</span><strong>Challenging games</strong><span>Exploration and combat.</span></span><span class="inspiration-arrow" aria-hidden="true">↗</span>
+                        </button>
+                        <button type="button" class="inspiration-card together" data-prompt="co-op exploration survival game to play with friends">
+                            <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/892970/header.jpg" alt="" loading="lazy">
+                            <span class="inspiration-shade"></span><span class="inspiration-text"><span class="mood-label">Together</span><strong>Play with friends</strong><span>Co-op survival and exploration.</span></span><span class="inspiration-arrow" aria-hidden="true">↗</span>
+                        </button>
+                    </div>
+                    <div class="starter-section"><div class="section-heading"><div><p class="eyebrow">Use a favorite</p><h2>More games like…</h2></div></div>
+                        <div class="favorite-starters">
+                            <button type="button" data-seed="413150" data-name="Stardew Valley"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/413150/header.jpg" alt="" loading="lazy"><span><strong>Stardew Valley</strong><small>Farming and town life</small></span><span aria-hidden="true">+</span></button>
+                            <button type="button" data-seed="620" data-name="Portal 2"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/620/header.jpg" alt="" loading="lazy"><span><strong>Portal 2</strong><small>Physics puzzles</small></span><span aria-hidden="true">+</span></button>
+                            <button type="button" data-seed="367520" data-name="Hollow Knight"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/367520/header.jpg" alt="" loading="lazy"><span><strong>Hollow Knight</strong><small>Exploration and platforming</small></span><span aria-hidden="true">+</span></button>
+                        </div>
+                    </div>
+                    <div class="discovery-tip"><span class="tip-icon" aria-hidden="true">↳</span><p><strong>Refine your search.</strong><br>Add a few games you love, then tell us what you want to keep — or change.</p></div>
+                </div>
+
+                <div id="main-content" hidden>
+                    <div class="section-heading results-heading"><div><p class="eyebrow">Recommendations</p><h2>Games for your search</h2><p id="results-summary" class="results-summary"></p></div><span id="results-count" class="results-count" role="status"></span></div>
+                    <div id="active-interests" class="active-interests"></div>
+                    <div id="results" class="results-grid"></div>
+                    <details id="search-details" class="search-details" hidden><summary>Why these games?</summary><div id="logs-content"></div></details>
+                </div>
+            </section>
+        </main>
+        <footer class="site-footer"><span>GameRecApp</span><span>Game artwork and reviews from Steam.</span></footer>
+    </div>
+    <div id="toast" class="toast" role="status" hidden></div>
+    <script src="config.js?v=20261001-path1"></script>
+    <script src="app.js?v=20261001-real1"></script>
+</body>
+</html>

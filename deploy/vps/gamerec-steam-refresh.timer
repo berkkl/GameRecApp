@@ -1,0 +1,11 @@
+[Unit]
+Description=Refresh the Steam catalog each Sunday at 03:00 Istanbul time
+
+[Timer]
+OnCalendar=Sun *-*-* 03:00:00 Europe/Istanbul
+Persistent=true
+RandomizedDelaySec=5m
+Unit=gamerec-steam-refresh.service
+
+[Install]
+WantedBy=timers.target

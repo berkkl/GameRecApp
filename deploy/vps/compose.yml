@@ -1,0 +1,43 @@
+services:
+  gamerecapp:
+    image: ${GAMEREC_IMAGE:?Set GAMEREC_IMAGE to the validated release image}
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:4320:8000"
+    environment:
+      ACTIVE_CATALOG_MANIFEST: ""
+      DATA_DIR: /app/state
+      DB_PATH: /app/catalog/games.duckdb
+      INDEX_PATH: /app/catalog/rag/games.index
+      EMBED_THREADS: "2"
+      EMBED_DEVICE: cpu
+      DEMO_CATALOG: ${DEMO_CATALOG:-false}
+      CATALOG_NOTICE: ${CATALOG_NOTICE:-}
+      ENABLE_SEARCH_HISTORY: "false"
+      ENABLE_SEARCH_LOGS: "false"
+      ENABLE_CLOUD_HISTORY: "false"
+      ENABLE_TRANSLATION: "false"
+      ENABLE_AI_FEEDBACK: "false"
+    volumes:
+      - ${GAMEREC_CATALOG_DIR:-/opt/gamerecapp/catalog}:/app/catalog:ro
+      - /opt/gamerecapp/state:/app/state
+    networks:
+      proxy:
+        aliases:
+          - gamerecapp
+    mem_limit: 3g
+    cpus: 2
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  proxy:
+    external: true
+    name: ${GAMEREC_PROXY_NETWORK:-proxy}

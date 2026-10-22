@@ -1,0 +1,251 @@
+core_mode:
+  - Singleplayer
+  - Multiplayer
+  - Co-op
+  - MMO
+  - PvP
+  - PvE
+  - Local Co-op
+  - Online Co-op
+  - Split Screen
+
+genre:
+  - Action
+  - Adventure
+  - RPG
+  - Strategy
+  - Simulation
+  - Puzzle
+  - Shooter
+  - Platformer
+  - Fighting
+  - Racing
+  - Sports
+  - Card Game
+  - Board Game
+  - Visual Novel
+  - Roguelike
+  - Metroidvania
+  - Survival
+  - Horror
+  - Stealth
+  - Battle Royale
+  - MOBA
+  - RTS
+  - Turn-Based Strategy
+  - 4X
+  - Grand Strategy
+  - Tower Defense
+  - Hack and Slash
+  - Beat 'em up
+  - Point and Click
+  - Interactive Movie
+  - Rhythm
+  - Sandbox
+  - Open World
+  - JRPG
+  - CRPG
+  - ARPG
+  - TRPG
+  - Idle
+  - Gacha
+  - Agriculture
+  - Free to Play
+
+tone:
+  - Dark
+  - Funny
+  - Relaxing
+  - Intense
+  - Emotional
+  - Wholesome
+  - Edgy
+  - Serious
+  - Lighthearted
+  - Surreal
+  - Psychedelic
+  - Atmospheric
+  - Cinematic
+  - Epic
+  - Cute
+  - Gritty
+  - Mature
+  - Casual
+  - Hardcore
+  - Cozy
+  - Spooky
+  - Mystery
+  - Comedy
+  - Drama
+
+aesthetics:
+  - Pixel Art
+  - 3D
+  - 2D
+  - Low Poly
+  - Realistic
+  - Stylized
+  - Anime
+  - Cartoon
+  - Hand-drawn
+  - Voxel
+  - Retro
+  - Minimalist
+  - Noir
+  - Cyberpunk
+  - Steampunk
+  - Fantasy
+  - Sci-Fi
+  - Post-apocalyptic
+  - Medieval
+  - Modern
+  - Historical
+  - Gothic
+  - Lovecraftian
+  - Abstract
+  - Colorful
+  - Monochrome
+
+mechanics:
+  - Turn-based
+  - Real-time
+  - Crafting
+  - Building
+  - Exploration
+  - Combat
+  - Resource Management
+  - Deckbuilding
+  - Permadeath
+  - Procedural Generation
+  - Physics
+  - Quick Time Events
+  - Dialogue Choices
+  - Multiple Endings
+  - Character Customization
+  - Moddable
+  - Controller Friendly
+  - VR
+  - First-Person
+  - Third-Person
+  - Isometric
+  - Top-Down
+  - Side-Scroller
+  - Loot
+  - Level Editor
+  - Parkour
+  - Bullet Hell
+
+session:
+  - Short
+  - Long
+  - Replayable
+  - Linear
+  - Endless
+  - Story Rich
+  - Arcade
+
+# Experience dimension - how the game FEELS to play
+experience:
+  - Frustrating      # Punishing, makes you restart
+  - Trolling         # Designed to mess with friends
+  - Chaotic          # Unpredictable, party-game feel
+  - Chill            # No stress, zen gameplay
+  - Competitive      # Rankings, leaderboards
+  - Cooperative      # True teamwork required
+  - Challenging      # Difficult but fair
+  - Addictive        # One more turn syndrome
+  - Satisfying       # Completion feels good
+  - Stressful        # High pressure, time limits
+
+# Profile dimensions define which buckets combine into profiles
+profile_dimensions:
+  primary: core_mode      # First dimension: how you play
+  secondary: experience   # Second dimension: how it feels
+  tertiary: tone         # Third dimension: the vibe
+
+# Example keyword hints for experience detection
+experience_hints:
+  frustrating:
+    - restart
+    - punishing
+    - rage quit
+    - start over
+    - annoying
+    - troll
+  chaotic:
+    - chaos
+    - party game
+    - wild
+    - unpredictable
+    - crazy
+  chill:
+    - relaxing
+    - zen
+    - peaceful
+    - no stress
+    - laid back
+  competitive:
+    - ranked
+    - competitive
+    - esports
+    - leaderboard
+    - versus
+
+aliases:
+  souls-like: Soulslike
+  soulslike: Soulslike
+  couch coop: Local Co-op
+  couch-coop: Local Co-op
+  local multiplayer: Multiplayer
+  online multiplayer: Multiplayer
+  controller support: Controller Friendly
+  controller-friendly: Controller Friendly
+  fps: Shooter
+  farming: Agriculture
+  farm: Agriculture
+  farming sim: Agriculture
+  farming simulator: Agriculture
+  çiftçilik: Agriculture
+  çiftlik: Agriculture
+  rahatlatıcı: Relaxing
+  bulmaca: Puzzle
+  bulmacaları: Puzzle
+  mantık: Logic
+  yarış: Racing
+  korku: Horror
+  strateji: Strategy
+  sıra tabanlı: Turn-Based Strategy
+  keşif: Exploration
+  hayatta kalma: Survival
+  relaxing: Relaxing
+  pixel graphics: Pixel Art
+  tps: Third-Person
+  rpg: RPG
+  role playing game: RPG
+  role-playing game: RPG
+  4x: 4X
+  br: Battle Royale
+  battle royale: Battle Royale
+  vn: Visual Novel
+  rts: RTS
+  real time strategy: RTS
+  tbs: Turn-Based Strategy
+  turn based strategy: Turn-Based Strategy
+  mmo: MMO
+  massively multiplayer: MMO
+  pvp: PvP
+  pve: PvE
+  rogue-like: Roguelike
+  rogue-lite: Roguelike
+  metroidvania: Metroidvania
+  sci-fi: Sci-Fi
+  science fiction: Sci-Fi
+  post-apoc: Post-apocalyptic
+  post apocalyptic: Post-apocalyptic
+  point-and-click: Point and Click
+  beat-em-up: Beat 'em up
+  hack-and-slash: Hack and Slash
+  deck-building: Deckbuilding
+  deck building: Deckbuilding
+  free to play: Free to Play
+  f2p: Free to Play

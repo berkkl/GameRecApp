@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search History - GameRecApp</title>
+    <link rel="stylesheet" href="design.css?v=20261002-design1">
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .back-btn {
+            padding: 10px 20px;
+            background: var(--accent-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            background: var(--accent-secondary);
+        }
+
+        .stats-bar {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .history-table th,
+        .history-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .history-table th {
+            background: var(--bg-secondary);
+            color: var(--text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+        }
+
+        .history-table tr:hover {
+            background: var(--surface-muted);
+        }
+
+        .query-text {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .tags-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .tag {
+            padding: 2px 8px;
+            background: var(--primary-soft);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: var(--accent-primary);
+        }
+
+        .rating-badge {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .rating-high {
+            background: var(--success-soft);
+            color: var(--success);
+        }
+
+        .rating-medium {
+            background: var(--warning-soft);
+            color: var(--warning);
+        }
+
+        .rating-low {
+            background: var(--danger-soft);
+            color: var(--error);
+        }
+
+        .time-stamp {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .view-btn {
+            padding: 6px 12px;
+            background: transparent;
+            border: 1px solid var(--border-control);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .view-btn:hover {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: var(--text-muted);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            width: 90%;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-section {
+            margin-bottom: 20px;
+        }
+
+        .modal-section h4 {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .ai-feedback-modal {
+            background: var(--bg-card);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .ai-feedback-modal ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .ai-feedback-modal li {
+            padding: 5px 0;
+            color: var(--text-secondary);
+        }
+
+        .results-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 15px;
+            background: var(--bg-card);
+            border-radius: 8px;
+        }
+
+        .result-name {
+            font-weight: 500;
+        }
+
+        .result-score {
+            color: var(--accent-primary);
+        }
+        header, .stats-bar { flex-wrap: wrap; gap: 16px; }
+        .modal-content { background: var(--surface); border-radius: var(--radius-panel); }
+        .close-btn { min-width: 44px; }
+        .table-scroll { overflow-x: auto; }
+        .container { max-width: 1440px; padding: 24px 40px; }
+        .back-btn { display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; }
+        #history-access { display: grid; gap: 8px; max-width: 560px; margin-bottom: 24px; }
+        #history-access label { font-size: 14px; font-weight: 600; }
+        #history-access button { justify-self: start; border: 1px solid var(--primary); border-radius: var(--radius-control); background: var(--primary); color: var(--surface); padding: 10px 16px; font-size: 14px; }
+        #history-access button:hover { background: var(--primary-hover); }
+        .logo { font-size: clamp(28px, 3vw, 40px); font-weight: 600; }
+        @media (max-width: 760px) { .container { padding: 16px; } header { padding: 16px 0; } }
+    </style>
+</head>
+
+<body>
+    <header class="container">
+        <h1 class="logo">Search history</h1>
+        <a href="./" class="back-btn">← Back to Search</a>
+    </header>
+
+    <div class="container">
+        <form id="history-access">
+            <label for="history-token">History access token (if configured)</label>
+            <input id="history-token" type="password" autocomplete="off">
+            <button type="submit">Load history</button>
+        </form>
+        <div class="stats-bar" id="stats">
+            <div class="stat">
+                <div class="stat-value" id="total-searches">-</div>
+                <div class="stat-label">Total Searches</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="avg-rating">-</div>
+                <div class="stat-label">Avg AI Rating</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="rated-count">-</div>
+                <div class="stat-label">Rated Searches</div>
+            </div>
+        </div>
+
+        <div class="table-scroll"><table class="history-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Query</th>
+                    <th>Tags</th>
+                    <th>AI Rating</th>
+                    <th>Version</th>
+                    <th>Time</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="history-body">
+                <tr>
+                    <td colspan="7" class="loading">Loading history...</td>
+                </tr>
+            </tbody>
+        </table></div>
+    </div>
+
+    <div class="modal" id="detail-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title">Search Details</span>
+                <button class="close-btn" onclick="closeModal()">×</button>
+            </div>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script>
+        let historyToken = '';
+        const historyHeaders = () => historyToken ? {Authorization: `Bearer ${historyToken}`} : {};
+        document.getElementById('history-access').addEventListener('submit', event => {
+            event.preventDefault();
+            historyToken = document.getElementById('history-token').value;
+            loadHistory();
+        });
+        async function loadHistory() {
+            try {
+                const response = await fetch(API_BASE + '/search-history', {headers: historyHeaders()});
+                if (!response.ok) throw new Error('History unavailable');
+                const data = await response.json();
+
+                // Update stats
+                document.getElementById('total-searches').textContent = data.stats.total_searches;
+                document.getElementById('avg-rating').textContent = data.stats.avg_rating.toFixed(1);
+                document.getElementById('rated-count').textContent = data.stats.rated_searches;
+
+                // Render table
+                const tbody = document.getElementById('history-body');
+                if (data.searches.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" class="loading">No searches yet</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = data.searches.map(s => {
+                    const ratingClass = s.rating >= 7 ? 'rating-high' :
+                        s.rating >= 5 ? 'rating-medium' : 'rating-low';
+                    const tagsHtml = (s.tags_found || []).slice(0, 3).map(t =>
+                        '<span class="tag">' + escapeHTML(t) + '</span>'
+                    ).join('');
+                    const time = new Date(s.timestamp).toLocaleString();
+
+                    return '<tr>' +
+                        '<td>#' + Number(s.id) + '</td>' +
+                        '<td class="query-text">' + escapeHTML(s.query) + '</td>' +
+                        '<td><div class="tags-list">' + tagsHtml + '</div></td>' +
+                        '<td><span class="rating-badge ' + ratingClass + '">' + escapeHTML(s.rating) + '/10</span></td>' +
+                        '<td><span style="padding:2px 6px;background:var(--primary-soft);border-radius:4px;font-size:0.75rem;color:var(--accent-primary)">v' + escapeHTML(s.version || '0.1.0') + '</span></td>' +
+                        '<td class="time-stamp">' + time + '</td>' +
+                        '<td><button class="view-btn" onclick="viewDetails(' + Number(s.id) + ')">View</button></td>' +
+                        '</tr>';
+                }).join('');
+
+            } catch (e) {
+                document.getElementById('history-body').innerHTML =
+                    '<tr><td colspan="7" class="loading">Error loading history</td></tr>';
+            }
+        }
+
+        async function viewDetails(id) {
+            try {
+                const response = await fetch(API_BASE + '/search-history/' + id, {headers: historyHeaders()});
+                if (!response.ok) throw new Error('History unavailable');
+                const data = await response.json();
+
+                const fb = data.ai_feedback || {};
+                const ratingColor = fb.rating >= 7 ? 'var(--success)' :
+                    fb.rating >= 5 ? 'var(--warning)' : 'var(--error)';
+
+                let html = '<div class="modal-section">' +
+                    '<h4>Query</h4>' +
+                    '<p style="font-size:1.1rem">"' + escapeHTML(data.query) + '"</p>' +
+                    '</div>';
+
+                html += '<div class="modal-section">' +
+                    '<h4>Tags Found</h4>' +
+                    '<div class="tags-list">' +
+                    (data.tags_found || []).map(t => '<span class="tag">' + escapeHTML(t) + '</span>').join('') +
+                    '</div></div>';
+
+                if (data.tags_excluded && data.tags_excluded.length > 0) {
+                    html += '<div class="modal-section">' +
+                        '<h4>Excluded Tags</h4>' +
+                        '<div class="tags-list">' +
+                        data.tags_excluded.map(t => '<span class="tag" style="background:var(--danger-soft);color:var(--error)">✗ ' + escapeHTML(t) + '</span>').join('') +
+                        '</div></div>';
+                }
+
+                html += '<div class="modal-section">' +
+                    '<h4>AI Feedback</h4>' +
+                    '<div class="ai-feedback-modal">' +
+                    '<p><strong>Rating:</strong> <span style="color:' + ratingColor + '">' + escapeHTML(fb.rating) + '/10</span></p>';
+
+                if (fb.notes) html += '<p style="margin:10px 0">' + escapeHTML(fb.notes) + '</p>';
+
+                if (fb.strengths && fb.strengths.length) {
+                    html += '<p><strong>Strengths:</strong></p><ul>';
+                    fb.strengths.forEach(s => html += '<li>✅ ' + escapeHTML(s) + '</li>');
+                    html += '</ul>';
+                }
+
+                if (fb.weaknesses && fb.weaknesses.length) {
+                    html += '<p><strong>Weaknesses:</strong></p><ul>';
+                    fb.weaknesses.forEach(w => html += '<li>⚠️ ' + escapeHTML(w) + '</li>');
+                    html += '</ul>';
+                }
+
+                if (fb.suggestions && fb.suggestions.length) {
+                    html += '<p><strong>Suggestions:</strong></p><ul>';
+                    fb.suggestions.forEach(s => html += '<li>💡 ' + escapeHTML(s) + '</li>');
+                    html += '</ul>';
+                }
+
+                html += '</div></div>';
+
+                html += '<div class="modal-section">' +
+                    '<h4>Results</h4>' +
+                    '<div class="results-list">' +
+                    (data.results || []).map(r =>
+                        '<div class="result-item">' +
+                        '<span class="result-name">' + escapeHTML(r.name) + '</span>' +
+                        '<span class="result-score">' + (r.score * 100).toFixed(0) + '%</span>' +
+                        '</div>'
+                    ).join('') +
+                    '</div></div>';
+
+                document.getElementById('modal-body').innerHTML = html;
+                document.getElementById('detail-modal').classList.add('active');
+
+            } catch (e) {
+                alert('Error loading details');
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('detail-modal').classList.remove('active');
+        }
+
+        document.getElementById('detail-modal').addEventListener('click', function (e) {
+            if (e.target === this) closeModal();
+        });
+
+        loadHistory();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+genres:
+  - Action
+  - Adventure
+  - RPG
+  - Strategy
+  - Simulation
+  - Sports
+  - Puzzle
+  - Shooter
+  - Platformer
+  - Fighting
+
+moods:
+  - Relaxing
+  - Intense
+  - Dark
+  - Funny
+  - Emotional
+  - Challenging
+  - Cozy
+
+mechanics:
+  - Open World
+  - Turn-based
+  - Real-time
+  - Co-op
+  - Multiplayer
+  - Singleplayer
+  - Crafting
+  - Survival
+  - Roguelike
+  - Deckbuilding
+
+themes:
+  - Sci-Fi
+  - Fantasy
+  - Horror
+  - Historical
+  - Cyberpunk
+  - Post-apocalyptic

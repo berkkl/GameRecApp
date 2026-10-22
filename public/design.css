@@ -1,0 +1,66 @@
+/* Shared tokens and controls for discovery, history and benchmark pages. */
+:root {
+    color-scheme: light;
+    --background: #fafafa;
+    --surface: #ffffff;
+    --surface-muted: #f2f4f5;
+    --text: #24272b;
+    --text-muted: #616970;
+    --primary: #185c68;
+    --primary-hover: #124954;
+    --primary-soft: #eaf3f5;
+    --border: #e3e6e8;
+    --border-control: #879399;
+    --success: #266344;
+    --success-soft: #eef6f0;
+    --warning: #86531c;
+    --warning-soft: #fbf3e6;
+    --danger: #a13232;
+    --danger-soft: #fef1f1;
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-8: 32px;
+    --space-10: 40px;
+    --radius-control: 8px;
+    --radius-panel: 12px;
+    --font-body: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --bg-primary: var(--background);
+    --bg-secondary: var(--surface-muted);
+    --bg-card: var(--surface);
+    --bg-glass: var(--surface-muted);
+    --accent-primary: var(--primary);
+    --accent-secondary: var(--primary-hover);
+    --text-primary: var(--text);
+    --text-secondary: var(--text-muted);
+    --border-color: var(--border);
+    --error: var(--danger);
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--background); color: var(--text); font-family: var(--font-body); font-size: 16px; line-height: 1.65; }
+button, input, textarea, select { font: inherit; }
+button, a, input, select, textarea, summary { -webkit-tap-highlight-color: transparent; }
+button, summary { cursor: pointer; }
+button { min-height: 44px; }
+a { color: var(--primary); text-underline-offset: 3px; }
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--primary); outline-offset: 3px;
+}
+:where(input:not([type=radio]):not([type=checkbox]), textarea, select) {
+    min-width: 0; min-height: 44px; background: var(--surface); color: var(--text);
+    border: 1px solid var(--border-control); border-radius: var(--radius-control);
+    padding: 10px 12px; font-size: 16px; line-height: 1.5;
+}
+input::placeholder, textarea::placeholder { color: var(--text-muted); opacity: 1; }
+[hidden] { display: none !important; }
+button:disabled { cursor: default; opacity: .65; }
+h1, h2, h3 { line-height: 1.3; font-weight: 600; overflow-wrap: anywhere; }
+h1 { font-size: clamp(28px, 3vw, 40px); }
+h2 { font-size: 24px; }
+h3 { font-size: 20px; }
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

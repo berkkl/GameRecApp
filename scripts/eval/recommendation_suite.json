@@ -1,0 +1,13 @@
+[
+  {"id":"farm-en","text":"A relaxing farming game where I grow crops and look after animals","relevant_tags":["Agriculture","Farming Sim"],"forbidden_tags":["Horror"]},
+  {"id":"farm-tr","text":"Ekin yetiştirip hayvan bakabileceğim rahatlatıcı bir çiftçilik oyunu","relevant_tags":["Agriculture","Farming Sim"],"forbidden_tags":["Horror"]},
+  {"id":"puzzle-en","text":"A puzzle game with clever logic and no horror","relevant_tags":["Puzzle","Logic"],"forbidden_tags":["Horror","Survival Horror"]},
+  {"id":"puzzle-tr","text":"Mantık bulmacaları çözmek istiyorum, korku istemiyorum","relevant_tags":["Puzzle","Logic"],"forbidden_tags":["Horror","Survival Horror"]},
+  {"id":"strategy","text":"A turn based strategy game with tactical battles","relevant_tags":["Turn-Based Strategy","Turn-Based Tactics"],"forbidden_tags":[]},
+  {"id":"racing","text":"A realistic racing simulator with cars","relevant_tags":["Racing","Automobile Sim"],"forbidden_tags":[]},
+  {"id":"coop","text":"Cooperative puzzle games to play with a friend","hard_filters":{"co_op":true},"relevant_tags":["Puzzle"],"forbidden_tags":[]},
+  {"id":"seed-farm","seed_app_ids":[413150],"relevant_tags":["Agriculture","Farming Sim","Life Sim"],"forbidden_tags":[]},
+  {"id":"seed-farm-gems","seed_app_ids":[413150],"preference":"hidden_gems","relevant_tags":["Agriculture","Farming Sim","Life Sim"],"forbidden_tags":[]},
+  {"id":"two-seeds","seed_app_ids":[413150,1158160],"relevant_tags":["Agriculture","Farming Sim","Life Sim"],"forbidden_tags":[]},
+  {"id":"seed-prompt","text":"More farming and exploration, no combat","seed_app_ids":[413150],"relevant_tags":["Agriculture","Farming Sim","Exploration"],"forbidden_tags":["Combat"]}
+]

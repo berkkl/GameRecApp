@@ -1,0 +1,35 @@
+# Supply a validated local catalog/index. No credentials in substitutions.
+substitutions:
+  _REGION: europe-west1
+  _EMBED_MODEL: sentence-transformers/all-MiniLM-L6-v2
+  _EMBED_REVISION: ''
+  _DB_PATH: /app/data/games.db
+  _INDEX_PATH: /app/data/games.index
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args: ['build', '--build-arg', 'EMBED_MODEL=${_EMBED_MODEL}', '--build-arg', 'EMBED_REVISION=${_EMBED_REVISION}', '-t', '${_REGION}-docker.pkg.dev/$PROJECT_ID/gamerec/gamerecapp:latest', '.']
+    timeout: 3600s
+  - name: gcr.io/cloud-builders/docker
+    args: ['push', '${_REGION}-docker.pkg.dev/$PROJECT_ID/gamerec/gamerecapp:latest']
+  - name: gcr.io/cloud-builders/gcloud
+    args:
+      - run
+      - deploy
+      - gamerecapp
+      - --image=${_REGION}-docker.pkg.dev/$PROJECT_ID/gamerec/gamerecapp:latest
+      - --region=${_REGION}
+      - --platform=managed
+      - --allow-unauthenticated
+      - --memory=4Gi
+      - --cpu=2
+      - --max-instances=10
+      - --timeout=300s
+      - --port=8000
+      - --cpu-boost
+      - --execution-environment=gen2
+      - --set-env-vars=EMBED_MODEL=${_EMBED_MODEL},EMBED_REVISION=${_EMBED_REVISION},DB_PATH=${_DB_PATH},INDEX_PATH=${_INDEX_PATH}
+images:
+  - ${_REGION}-docker.pkg.dev/$PROJECT_ID/gamerec/gamerecapp:latest
+options:
+  machineType: N1_HIGHCPU_8
+timeout: 4500s
